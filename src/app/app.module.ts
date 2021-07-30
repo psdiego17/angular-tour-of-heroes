@@ -4,13 +4,16 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { HeroesComponent } from './heroes/heroes.component';
 
-@NgModule({
+import { FormsModule } from '@angular/forms'; // <-- NgModel lives here
+
+@NgModule({ //matriz onde são declarados as informações dos imports
   declarations: [
     AppComponent,
     HeroesComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
