@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Hero } from '../hero';//Fazendo o import do hero.ts
-import { HEROES } from '../mock-heroes'; //Fazendo o import do mock-heroes.ts que está atuando como um banco de dados
+//import { HEROES } from '../mock-heroes'; //Fazendo o import do mock-heroes.ts que está atuando como um banco de dados
+import { HeroService } from '../hero.service';
 
 @Component({
   selector: 'app-heroes',
@@ -12,27 +13,37 @@ import { HEROES } from '../mock-heroes'; //Fazendo o import do mock-heroes.ts qu
 como no AppModule. */
 
 export class HeroesComponent implements OnInit {
-  heroes = HEROES;
+  
+  heroes: Hero[] = [];
   selectedHero?: Hero;
   /*Refatorando a hero propriedade do componente para ser do tipo Hero. 
   Inicializando com um id de 1 e o nome Windstorm. */
   
+  /*
   hero: Hero = { //Criação do objeto hero do tipo Hero que é uma interface
     id: 1,
     name: 'Windstorm'
-  }
-
+  }*/
   
   onSelect(hero: Hero): void {
   this.selectedHero = hero;
 }
   
-  constructor() { }
+  constructor(
+    
+    private heroService: HeroService
+  ) { }
 
   /*O ngOnInit()é um gancho de ciclo de vida . 
   Chamadas angulares ngOnInit()logo após a criação de um componente. 
   É um bom lugar para colocar a lógica de inicialização.*/
-  ngOnInit(): void {
+  ngOnInit() {
+    this.getHeroes();
+  }
+  
+  getHeroes(): void {
+    this.heroService.getHeroes()
+      .subscribe(heroes => this.heroes = heroes);
   }
 
 }
