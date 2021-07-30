@@ -1,33 +1,28 @@
 import { Component, OnInit } from '@angular/core';
-
 import { Hero } from '../hero';//Fazendo o import do hero.ts
+//import { HEROES } from '../mock-heroes'; //Fazendo o import do mock-heroes.ts que está atuando como um banco de dados
 import { HeroService } from '../hero.service';
-import { MessageService } from '../message.service';
 
 @Component({
   selector: 'app-heroes',
   templateUrl: './heroes.component.html',
   styleUrls: ['./heroes.component.css']
 })
+
+/*Sempre exporta classe de componente para que você possa em import outro lugar ... 
+como no AppModule. */
+
 export class HeroesComponent implements OnInit {
-
-  selectedHero?: Hero;
-
   heroes: Hero[] = [];
 
-  constructor(private heroService: HeroService, private messageService: MessageService) { }
+  constructor(private heroService: HeroService) { }
 
   ngOnInit() {
     this.getHeroes();
   }
 
-  onSelect(hero: Hero): void {
-    this.selectedHero = hero;
-    this.messageService.add(`HeroesComponent: Selected hero id=${hero.id}`);
-  }
-
   getHeroes(): void {
     this.heroService.getHeroes()
-        .subscribe(heroes => this.heroes = heroes);
+    .subscribe(heroes => this.heroes = heroes);
   }
 }
